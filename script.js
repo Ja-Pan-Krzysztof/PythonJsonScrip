@@ -4,6 +4,7 @@ let name = document.getElementSelector('name');
 
 let xhr = new XMLHttpRequest();
 let url = "http://192.168.0.199:8000/";
+//ip serwera
 xhr.open('GET', url, true);
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.onreadystatechange = function(){
