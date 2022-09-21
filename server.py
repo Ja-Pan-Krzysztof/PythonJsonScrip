@@ -13,11 +13,12 @@ class LocalServer(SimpleHTTPRequestHandler):
             return f.read()
     def do_Get(self):
         if self.path =="/":
-        self.path="./templates/index.html"
-        file = self.readhtml(self.path)
-        self.send_response(200,"OK");
-        self.end_headers();
-        self.wfile.write(bytes(file,"utf8"))
+            
+            self.path="./templates/index.html"
+            file = self.readhtml(self.path)
+            self.send_response(200,"OK");
+            self.end_headers();
+            self.wfile.write(bytes(file,"utf8"))
  
 
 
