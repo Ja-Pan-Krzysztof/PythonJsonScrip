@@ -1,5 +1,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import database
+import requests
+import cgi
 #tak...
 db_name = "chuwel"
 #krzychu + Pawel po odcięciu pierszej sylaby wychodzi chuwel
@@ -18,7 +20,7 @@ class LocalServer(SimpleHTTPRequestHandler):
             file = r
 
         return file
-    def do_Get(self):
+    def do_GET(self):
         if self.path =="/":
             
             self.path="./templates/index.html"
@@ -26,7 +28,24 @@ class LocalServer(SimpleHTTPRequestHandler):
             self.send_response(200,"OK");
             self.end_headers();
             self.wfile.write(bytes(file,"utf8"))
- 
+
+    def do_POST(self):
+        if self.path == '/success':
+        
+        try:
+            form = cgi.FieldStorage()
+            firstname = form.getvalue('name')
+
+            print(firstname)
+
+        except:
+            self.send_error(404, 'Bad request')
+
+        html = "<html><head></head><body><h1>Success</h1></body></html>"
+
+        self.end_headers()
+        self.wfile.write(bytes(html, 'utf-8'))
+    
 
 
 class HostServer:
