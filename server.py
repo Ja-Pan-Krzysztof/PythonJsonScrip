@@ -12,7 +12,7 @@ class LocalServer(SimpleHTTPRequestHandler):
 
 class HostServer:
     #clss to klasa 
-    def __init__(self, host: str = '192.168.0.111', port: int = 8000):
+    def __init__(self, host: str = '192.168.0.199', port: int = 8000):
         #tak.................
         self.port = port
         self.host = host
