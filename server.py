@@ -9,8 +9,13 @@ class LocalServer(SimpleHTTPRequestHandler):
     #klasa
     @staticmethod 
     def readhtml(path):
-        with open(path,"r")as f:
-            return f.read()
+       # with open(path,"r")as f:
+           #return f.read()
+        try:
+           with open(path,"r")as f:
+           return f.read()  
+        except Exception as e:
+            file = r
     def do_Get(self):
         if self.path =="/":
             
