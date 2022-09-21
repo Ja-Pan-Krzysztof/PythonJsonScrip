@@ -6,16 +6,13 @@ if __name__ == '__main__':
 
     try:
         print('Server ON')
-        server.\
-            HostServer().\
+        host.\
             starhost().\
             serve_forever()  # -> server.py -> HostServer -> run server -> nasłuchiwanie
 
     except KeyboardInterrupt:
         print('Server OFF')
-        server.\
-            HostServer().\
-            stophost()
+        host.stophost()
 
     
 
