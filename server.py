@@ -13,9 +13,11 @@ class LocalServer(SimpleHTTPRequestHandler):
            #return f.read()
         try:
            with open(path,"r")as f:
-           return f.read()  
+            file=f.read()
         except Exception as e:
             file = r
+
+        return file
     def do_Get(self):
         if self.path =="/":
             
