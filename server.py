@@ -1,5 +1,6 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import database
+import cgi
 
 # tak...
 db_name = "chuwel"
@@ -31,6 +32,21 @@ class LocalServer(SimpleHTTPRequestHandler):
             self.send_response(200, "OK")
             self.end_headers()
             self.wfile.write(bytes(file, "utf8"))
+
+    def do_POST(self):
+        if self.path == '/success':
+            ctype, pdict = cgi.parse_multipart(self.headers.get('content-type'))
+            pdict['name'] = bytes(pdict['name'], 'utf-8')
+
+            if ctype == 'multipart/form-data':
+                fields = cgi.parse_multipart(self.rfile, pdict)
+                name = fields.get("name")[0]
+                # create table User if it runs first time else not<font></font>
+                html = f"<html><head></head><body><h1>Form data successfully recorded!!!</h1></body></html>"
+                self.send_response(200, "OK")
+                self.end_headers()
+                self.wfile.write(bytes(html, "utf-8"))
+
 
 class HostServer:
     # clss to klasa
