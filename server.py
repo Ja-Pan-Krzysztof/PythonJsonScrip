@@ -1,17 +1,11 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+
 import database
-<<<<<<< HEAD
 import cgi
-=======
-<<<<<<< HEAD
-import requests
-import cgi
-#tak...
-=======
->>>>>>> a108a83d950d44a043ec9b38fd017872f505549b
 
 # tak...
->>>>>>> 3bccf39fb2015ed7f77ebd49d072f7874740f7f2
+
+# tak...
 db_name = "chuwel"
 
 
@@ -33,57 +27,34 @@ class LocalServer(SimpleHTTPRequestHandler):
             file = e
 
         return file
-<<<<<<< HEAD
-    def do_GET(self):
-        if self.path =="/":
-            
-            self.path="./templates/index.html"
-            file = self.readhtml(self.path)
-            self.send_response(200,"OK");
-            self.end_headers();
-            self.wfile.write(bytes(file,"utf8"))
-
-    def do_POST(self):
-        if self.path == '/success':
-        
-        try:
-            form = cgi.FieldStorage()
-            firstname = form.getvalue('name')
-
-            print(firstname)
-
-        except:
-            self.send_error(404, 'Bad request')
-
-        html = "<html><head></head><body><h1>Success</h1></body></html>"
-
-        self.end_headers()
-        self.wfile.write(bytes(html, 'utf-8'))
-    
-=======
->>>>>>> 3bccf39fb2015ed7f77ebd49d072f7874740f7f2
 
     def do_GET(self):
-        if self.path == '/':
-            self.path = './templates/index.html'
-            file = self.readhtml(self.path)
+        if self.path == "/":
+            template = "./templates/index.html"
+            file = self.readhtml(template)
             self.send_response(200, "OK")
             self.end_headers()
             self.wfile.write(bytes(file, "utf8"))
 
+        if self.path == '/success':
+            file = self.readhtml(self.path)
+
+            self.send_response(200, 'OK')
+            self.end_headers()
+            self.wfile.write(bytes(file, 'utf8'))
+
     def do_POST(self):
         if self.path == '/success':
-            ctype, pdict = cgi.parse_multipart(self.headers.get('content-type'))
-            pdict['name'] = bytes(pdict['name'], 'utf-8')
-
-            if ctype == 'multipart/form-data':
-                fields = cgi.parse_multipart(self.rfile, pdict)
-                name = fields.get("name")[0]
-                # create table User if it runs first time else not<font></font>
-                html = f"<html><head></head><body><h1>Form data successfully recorded!!!</h1></body></html>"
-                self.send_response(200, "OK")
-                self.end_headers()
-                self.wfile.write(bytes(html, "utf-8"))
+            form = cgi.FieldStorage(
+                fp=self.rfile,
+                headers=self.headers,
+                environ={'REQUEST_METHOD': 'POST'}
+            )
+            '''
+            
+            Here, we will add to the database 
+            
+            '''
 
 
 class HostServer:
