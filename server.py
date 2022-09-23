@@ -37,11 +37,9 @@ class LocalServer(SimpleHTTPRequestHandler):
             self.wfile.write(bytes(file, "utf8"))
 
         if self.path == '/success':
-            file = self.readhtml(self.path)
-
-            self.send_response(200, 'OK')
-            self.end_headers()
-            self.wfile.write(bytes(file, 'utf8'))
+            template = './templates/success.html'
+            file = self.readhtml(template)
+            self.wfile.write(bytes(file, "utf8"))
 
     def do_POST(self):
         if self.path == '/success':
@@ -50,6 +48,8 @@ class LocalServer(SimpleHTTPRequestHandler):
                 headers=self.headers,
                 environ={'REQUEST_METHOD': 'POST'}
             )
+
+            print(form.getvalue('name'))
             '''
             
             Here, we will add to the database 
