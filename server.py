@@ -14,9 +14,7 @@ u.create_table()
 u.disconn()
 
 
-
 # krzychu + Pawel po odcięciu pierszej sylaby wychodzi chuwel
-
 
 class LocalServer(SimpleHTTPRequestHandler):
 

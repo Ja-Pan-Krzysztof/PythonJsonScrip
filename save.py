@@ -12,7 +12,7 @@ cursor = connection.cursor()
 
 traffic = json.load(open('json_file.json'))
 #otwiera json
-columns = ['name','course','roll']
+columns = ['name', 'course', 'roll']
 
 for row in traffic:
     keys= tuple(row[c] for c in columns)
@@ -31,6 +31,6 @@ connection.close()
 u = User('user', 'user.db')
 u.conn()
 
-u.insert_record(1, 2)
+#u.insert_sercords("", "")
 u.disconn()
 #dziala tak troche <-:
