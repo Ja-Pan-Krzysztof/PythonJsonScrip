@@ -17,7 +17,7 @@ for row in traffic:
 
 
 connection.commit()
-connection.clase()
+connection.close()
 
 
 ################
