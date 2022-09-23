@@ -9,7 +9,7 @@ columns = ['name','course','roll']
 for row in traffic:
     keys= tuple(row[c] for c in columns)
     cursor.execute('insert into User values(?,?,?)',keys)
-    print(f'{row["name"]} data inserted Udało się')
+    print(f'{row["name"]} data inserted Succefully')
 
 
 connection.commit()
