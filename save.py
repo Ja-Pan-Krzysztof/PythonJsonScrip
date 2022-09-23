@@ -29,6 +29,7 @@ connection.close()
 ################
 
 u = User('user', 'user.db')
+#xD
 u.conn()
 
 u.insert_record(1, 2)
