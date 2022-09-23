@@ -1,12 +1,18 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-import database
+from database import User
 import cgi
 
 # tak...
 
 # tak...
 db_name = "chuwel"
+
+u = User('ja', 'ja.db')
+u.conn()
+u.create_table()
+u.disconn()
+
 
 
 # krzychu + Pawel po odcięciu pierszej sylaby wychodzi chuwel

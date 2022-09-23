@@ -1,8 +1,12 @@
 import json 
-import sqllite3
-connection = sqllite3.connect('ja.db')
+import sqlite3
+
+from database import User
+
+
+connection = sqlite3.connect('ja.db')
 cursor = connection.cursor()
-cursor.execute('Create table if not exists User (name Text,surname Text)')
+# cursor.execute('Create table if not exists user (name Text,surname Text)')
 
 traffic = json.load(open('json_file.json'))
 columns = ['name','course','roll']
@@ -14,3 +18,12 @@ for row in traffic:
 
 connection.commit()
 connection.clase()
+
+
+################
+
+u = User('user', 'user.db')
+u.conn()
+
+u.insert_record(1, 2)
+u.disconn()
