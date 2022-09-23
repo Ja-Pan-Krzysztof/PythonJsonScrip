@@ -27,3 +27,4 @@ u.conn()
 
 u.insert_record(1, 2)
 u.disconn()
+#dziala tak troche <-:
