@@ -27,7 +27,7 @@ class User:
         self.conn()\
             .commit()
 
-    def insert_sercords(self, name:str, surname:str):
+    def insert_sercords(self, name: str, surname: str):
         sql = f'INSERT INTO {self.db_name} (name, surname) VALUES ("{name}, "{surname}"'
 
         self.conn()\

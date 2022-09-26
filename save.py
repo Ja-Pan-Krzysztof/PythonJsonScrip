@@ -31,7 +31,6 @@ connection.close()
 u = User('user', 'user.db')
 #xD
 u.conn()
-
 #u.insert_sercords("", "")
 u.disconn()
 #dziala tak troche <-:

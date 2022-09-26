@@ -41,9 +41,8 @@ class LocalServer(SimpleHTTPRequestHandler):
             self.wfile.write(bytes(file, "utf8"))
 
         if self.path == '/success':
-            template = './templates/success.html'
-            file = self.readhtml(template)
-            self.wfile.write(bytes(file, "utf8"))
+            pass
+
 
     def do_POST(self):
         if self.path == '/success':
@@ -54,11 +53,13 @@ class LocalServer(SimpleHTTPRequestHandler):
             )
 
             print(form.getvalue('name'))
-            '''
-            
-            Here, we will add to the database 
-            
-            '''
+
+            template = './templates/success.html'
+            self.send_response(200, 'OK')
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            file = self.readhtml(template)
+            self.wfile.write(bytes(file, "utf8"))
 
 
 class HostServer:
