@@ -23,26 +23,28 @@
         
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
-            mnichu(){
-           let name = document.getElementById('name');
-let surname = document.getElementById('suname');
+           var url = "192.168.0.134:8080";
 
+var xhr = new XMLHttpRequest();
+xhr.open("POST", url);
 
-let xhr = new XMLHttpRequest();
-let url = "http://192.168.0.134:8000/";
+xhr.setRequestHeader("Accept", "application/json");
+xhr.setRequestHeader("Content-Type", "application/json");
 
-//ip serwera
-xhr.open('POST', url, true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.onreadystatechange = function(){
-    if (xhr.readyState === 4 && xhr.status === 200){
-        result.innerHTML = JSON.stringify(result);
-    }
-};
-var data = JSON.stringify({
-    "name":name.value,
-    "surname":surname.value
-});}
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+   }};
+
+var data = `{
+  "Id": 78912,
+  "Customer": "Jason Sweet",
+  "Quantity": 1,
+  "Price": 18.00
+}`;
+
+xhr.send(data);
            //AJax senior comment scripter jtr 
         </script>
    
