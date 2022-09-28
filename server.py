@@ -64,6 +64,25 @@ class LocalServer(SimpleHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             self.wfile.write(bytes(file, "utf8"))
+        
+        elif self.path=="/ajax":
+             form = cgi.FieldStorage(
+                fp=self.rfile,
+                headers=self.headers,
+                environ={'REQUEST_METHOD': 'POST'}
+            )
+
+            name = form.getvalue('name')
+            surname = form.getvalue('surname')
+       #    form = cgi.FieldStorage(
+       #       fp=self.rfile,
+       #       headers=self.headers,
+       #       environ={'REQUEST_METHOD': 'POST'}
+       #   )
+
+       #   name = form.getvalue('name')
+       #   surname = form.getvalue('surname')
+            print(name,surname)
 
 
 class HostServer:
