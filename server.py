@@ -46,8 +46,8 @@ class LocalServer(SimpleHTTPRequestHandler):
         if self.path == '/success':
             pass
 
-    def do_POST(self):
-        if self.path == '/success':
+    def do_POST(self):#xD
+        if self.path == '/success':#xD
             form = cgi.FieldStorage(
                 fp=self.rfile,
                 headers=self.headers,
