@@ -9,19 +9,43 @@
 
 <body>
 <hr>
-<form action="/success" enctype="multipart/form-data" method="POST">
-   <input type="text" name="name"> <br>
-   <input type="text" name="surname"> <br>
+<!-- <form action="/success" enctype="multipart/form-data" method="POST">
+   <input type="text" name="name" placeholder=" imie "> <br>
+   <input type="text" name="surname" placeholder="nazwisko "> <br>
    <input type="submit" value="Click me">
-</form>
+</form> -->
 <!--        <input type="text" name="name" placeholder=" imie ">-->
 <!--        <button onclick="wysylkaJSON()">kliknij to wysle json</button>-->
 
-        <input type="text" name="name" placeholder=" imie ">
-        <button onclick="wysylkaJSON()">kliknij to wysle json</button>
+<input type="text" id="surname" name="name" placeholder=" imie "> <br>
+<input type="text"id="name" name="surname" placeholder="nazwisko "> <br>
+<button onclick="mnich()">kliknij to wysle json</button>
         
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            mnichu(){
+           let name = document.getElementById('name');
+let surname = document.getElementById('suname');
+
+
+let xhr = new XMLHttpRequest();
+let url = "http://192.168.0.134:8000/";
+
+//ip serwera
+xhr.open('POST', url, true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onreadystatechange = function(){
+    if (xhr.readyState === 4 && xhr.status === 200){
+        result.innerHTML = JSON.stringify(result);
+    }
+};
+var data = JSON.stringify({
+    "name":name.value,
+    "surname":surname.value
+});}
+           //AJax senior comment scripter jtr 
+        </script>
    
-<script type="text/javascript" src="script.js">console.log("This is JavaScript");</script>
     <!--autor Paweł Kuczmik czyli paweltheriperr i krzychu Wandzel  czyli ja **/--> 
 </body>
 </html>
