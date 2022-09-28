@@ -3,6 +3,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from database import User
 import cgi
 import logging.config
+from io import BytesIO
 
 logging.config.fileConfig('logging.conf')
 logger = logging.getLogger(__name__)
@@ -36,7 +37,6 @@ class LocalServer(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/":
-
             template = "./templates/index.html"
             file = self.readhtml(template)
             self.send_response(200, "OK")
@@ -46,8 +46,8 @@ class LocalServer(SimpleHTTPRequestHandler):
         if self.path == '/success':
             pass
 
-    def do_POST(self):#xD
-        if self.path == '/success':#xD
+    def do_POST(self):  # xD
+        if self.path == '/success':  # xD
             form = cgi.FieldStorage(
                 fp=self.rfile,
                 headers=self.headers,
@@ -64,25 +64,20 @@ class LocalServer(SimpleHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             self.wfile.write(bytes(file, "utf8"))
-        
-        elif self.path=="/ajax":
-             form = cgi.FieldStorage(
-                fp=self.rfile,
+
+        if self.path == "/ajax":
+            form = cgi.FieldStorage(
+                fp=BytesIO(bytes(self.rfile)),
                 headers=self.headers,
-                environ={'REQUEST_METHOD': 'POST'}
-             )
+                environ={'REQUEST_METHOD': 'POST'},
+                encoding='utf-8'
+            )
 
-             name = form.getvalue('name')
-             surname = form.getvalue('surname')
-       #    form = cgi.FieldStorage(
-       #       fp=self.rfile,
-       #       headers=self.headers,
-       #       environ={'REQUEST_METHOD': 'POST'}
-       #   )
+            name = form.getvalue('name')
+            surname = form.getvalue('surname')
+            print(name, surname)
 
-       #   name = form.getvalue('name')
-       #   surname = form.getvalue('surname')
-             print(name, surname)
+            print('It\'s work !')
 
 
 class HostServer:
