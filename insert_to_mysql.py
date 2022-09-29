@@ -1,8 +1,17 @@
-from database_mysql import BASE, session
+from database_mysql import start_mysql
 
 from sqlalchemy import Column, String, Integer
+from sqlalchemy.ext.declarative import declarative_base
 
 from typing import NoReturn
+import logging.config
+
+
+logging.config.fileConfig('logging.conf')
+logger = logging.getLogger(__name__)
+
+
+BASE = declarative_base()
 
 
 class Users(BASE):
@@ -22,9 +31,27 @@ class Users(BASE):
 
 
 def insert_record(name: str, surname: str) -> NoReturn:
-    users = Users(name, surname)
+    """Insert record to Users
 
-    '''Add data to table / save / disconnect'''
-    session.add(users)
-    session.commit()
-    session.close()
+    :param name: string
+    :param surname: string
+    :return: NoReturn
+    """
+
+    try:
+        users = Users(name, surname)
+
+        status, conn, session, engine = start_mysql()
+        BASE.metadata.create_all(engine)
+
+        session.add(users)
+        session.commit()
+
+        conn.close()
+
+        return 0
+
+    except Exception as e:
+        logger.error('Can\'t add record.')
+        raise e
+

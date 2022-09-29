@@ -3,11 +3,14 @@ import logging.config
 import sys
 import re
 
+import database_mysql
+
 logging.config.fileConfig('logging.conf')
 logger = logging.getLogger(__name__)
 
 
 def get_ip():
+    """Set different IP"""
     try:
         ip = sys.argv[1]
 
@@ -25,6 +28,12 @@ def get_ip():
 
 
 if __name__ == '__main__':
+
+    sql_status = database_mysql.start_mysql()
+
+    if sql_status[0] != 0:
+        logger.critical('Can\'t connect to MySQL !')
+
     if get_ip() is not None:
         host = server.HostServer(host=get_ip())
 
@@ -37,6 +46,6 @@ if __name__ == '__main__':
             starhost().\
             serve_forever()
 
-    except (KeyboardInterrupt, OSError) as e:
+    except (KeyboardInterrupt, OSError):
         logger.info('Server OFF')
         host.stophost()

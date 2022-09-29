@@ -3,7 +3,6 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from database import User
 import cgi
 import logging.config
-from io import BytesIO
 
 logging.config.fileConfig('logging.conf')
 logger = logging.getLogger(__name__)
@@ -12,13 +11,6 @@ logger = logging.getLogger(__name__)
     :keyword here will be connection with MySQL
     :keyword and code below will be delete
 '''
-
-db_name = "chuwel"
-
-u = User('ja', 'ja.db')
-u.conn()
-u.create_table()
-u.disconn()
 
 
 class LocalServer(SimpleHTTPRequestHandler):
@@ -67,7 +59,7 @@ class LocalServer(SimpleHTTPRequestHandler):
 
         if self.path == "/ajax":
             form = cgi.FieldStorage(
-                fp=BytesIO(bytes(self.rfile)),
+                fp=self.rfile,
                 headers=self.headers,
                 environ={'REQUEST_METHOD': 'POST'},
                 encoding='utf-8'
@@ -81,7 +73,7 @@ class LocalServer(SimpleHTTPRequestHandler):
 
 
 class HostServer:
-    def __init__(self, host: str = '192.168.0.111', port: int = 8000):
+    def __init__(self, host: str = '192.168.0.111', port: int = 8080):
         self.port = port
         self.host = host
 
