@@ -1,20 +1,14 @@
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-from database import User
+from insert_to_mysql import insert_record
+
+from logging_conf import logger
+
 import cgi
-import logging.config
-
-logging.config.fileConfig('logging.conf')
-logger = logging.getLogger(__name__)
-
-''' MySQL
-    :keyword here will be connection with MySQL
-    :keyword and code below will be delete
-'''
 
 
-class LocalServer(SimpleHTTPRequestHandler):
-    logger.info('Server working')
+class LocalServer(BaseHTTPRequestHandler):
+    logger.info('Server working...')
 
     @staticmethod
     def readhtml(path):
@@ -38,8 +32,8 @@ class LocalServer(SimpleHTTPRequestHandler):
         if self.path == '/success':
             pass
 
-    def do_POST(self):  # xD
-        if self.path == '/success':  # xD
+    def do_POST(self):
+        if self.path == '/success':
             form = cgi.FieldStorage(
                 fp=self.rfile,
                 headers=self.headers,
@@ -48,6 +42,8 @@ class LocalServer(SimpleHTTPRequestHandler):
 
             name = form.getvalue('name')
             surname = form.getvalue('surname')
+
+            insert_record(name, surname)
 
             template = './templates/success.html'
             file = self.readhtml(template)

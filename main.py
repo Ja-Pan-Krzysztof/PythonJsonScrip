@@ -1,38 +1,43 @@
-import server
-import logging.config
-import sys
 import re
+import sys
 
 import database_mysql
-
-logging.config.fileConfig('logging.conf')
-logger = logging.getLogger(__name__)
+from logging_conf import logger
 
 
 def get_ip():
     """Set different IP"""
-    try:
-        ip = sys.argv[1]
+    args = []
 
-        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", ip):
-            logger.debug(f'Ip was set to : {ip}')
+    for arg in sys.argv:
+        args.append(arg)
 
-            return sys.argv[1]
+    if len(args) == 1:
+        return None
+
+    elif len(args) == 2:
+        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", args[1]):
+            logger.debug(f'Ip was set to : {args[1]}')
+
+            return args[1]
 
         else:
-            logger.critical('Bad Ip')
-            raise Exception('Bad Ip')
+            logger.error(f'Bad Ip')
+            logger.warning('Ip was default.')
 
-    except IndexError:
-        return None
+    else:
+        logger.critical('Too many arguments.')
+        sys.exit()
 
 
 if __name__ == '__main__':
-
     sql_status = database_mysql.start_mysql()
 
     if sql_status[0] != 0:
-        logger.critical('Can\'t connect to MySQL !')
+        logger.critical('Can\'t connect to MySQL !!!')
+        sys.exit()
+
+    import server
 
     if get_ip() is not None:
         host = server.HostServer(host=get_ip())

@@ -4,11 +4,7 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
 from typing import NoReturn
-import logging.config
-
-
-logging.config.fileConfig('logging.conf')
-logger = logging.getLogger(__name__)
+from logging_conf import logger
 
 
 BASE = declarative_base()

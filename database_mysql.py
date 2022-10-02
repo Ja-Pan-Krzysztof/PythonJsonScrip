@@ -2,8 +2,6 @@
 from pymysql import err
 from sqlalchemy import exc
 
-import logging.config
-
 from dotenv import load_dotenv
 from os import getenv
 
@@ -11,9 +9,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 
+from logging_conf import logger
 
-logging.config.fileConfig('logging.conf')
-logger = logging.getLogger(__name__)
 
 load_dotenv()
 
