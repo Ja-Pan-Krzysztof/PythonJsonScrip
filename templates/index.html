@@ -10,17 +10,42 @@
 <body>
 <hr>
 <form action="/success" enctype="multipart/form-data" method="POST">
-   <input type="text" name="name"> <br>
-   <input type="text" name="surname"> <br>
+   <input type="text" name="name" placeholder=" imie "> <br>
+   <input type="text" name="surname" placeholder="nazwisko "> <br>
    <input type="submit" value="Click me">
 </form>
-<!--        <input type="text" name="name" placeholder=" imie ">-->
-<!--        <button onclick="wysylkaJSON()">kliknij to wysle json</button>-->
+<br><br><br>
 
-        <input type="text" name="name" placeholder=" imie ">
-        <button onclick="wysylkaJSON()">kliknij to wysle json</button>
+<input type="text" id="name" name="name" placeholder=" imie "> <br>
+<input type="text" id="surname" name="surname" placeholder="nazwisko "> <br>
+<button onclick="mnich()">kliknij to wysle json</button>
+        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+            
+    function mnich() {
+        const name =  document.getElementById("name").value;
+        const surname =   document.getElementById("surname").value;
+
+        var request = { "name": name, "surname": surname};
+
+        $.ajax({
+            type:"POST",
+            url:"/ajax",
+            data: JSON.stringify(request),
+            dataType:"json",
+            contentType:"application/json; charset=utf-8",
+            success:function (result) {
+                alert(result);
+            },
+            error:function (result) {
+                alert("No Connection to server");
+            },
+        });
+    }
+           //AJax senior comment scripter jtr 
+</script>
    
-<script type="text/javascript" src="script.js"></script>
     <!--autor Paweł Kuczmik czyli paweltheriperr i krzychu Wandzel  czyli ja **/--> 
 </body>
 </html>

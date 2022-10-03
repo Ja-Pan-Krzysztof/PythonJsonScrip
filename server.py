@@ -1,28 +1,17 @@
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-from database import User
+from insert_to_mysql import insert_record
+
+from logging_conf import logger
+
 import cgi
 
-# tak...
 
-# tak...
-db_name = "chuwel"
+class LocalServer(BaseHTTPRequestHandler):
+    logger.info('Server working...')
 
-u = User('ja', 'ja.db')
-u.conn()
-u.create_table()
-u.disconn()
-
-
-# krzychu + Pawel po odcięciu pierszej sylaby wychodzi chuwel
-
-class LocalServer(SimpleHTTPRequestHandler):
-
-    # klasa
     @staticmethod
     def readhtml(path):
-        # with open(path,"r")as f:
-        # return f.read()
         try:
             with open(path) as f:
                 file = f.read()
@@ -43,7 +32,6 @@ class LocalServer(SimpleHTTPRequestHandler):
         if self.path == '/success':
             pass
 
-
     def do_POST(self):
         if self.path == '/success':
             form = cgi.FieldStorage(
@@ -52,30 +40,42 @@ class LocalServer(SimpleHTTPRequestHandler):
                 environ={'REQUEST_METHOD': 'POST'}
             )
 
-            print(form.getvalue('name'))
+            name = form.getvalue('name')
+            surname = form.getvalue('surname')
+
+            insert_record(name, surname)
 
             template = './templates/success.html'
+            file = self.readhtml(template)
+
             self.send_response(200, 'OK')
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            file = self.readhtml(template)
             self.wfile.write(bytes(file, "utf8"))
+
+        if self.path == "/ajax":
+            form = cgi.FieldStorage(
+                fp=self.rfile,
+                headers=self.headers,
+                environ={'REQUEST_METHOD': 'POST'},
+                encoding='utf-8'
+            )
+
+            name = form.getvalue('name')
+            surname = form.getvalue('surname')
+            print(name, surname)
+
+            print('It\'s work !')
 
 
 class HostServer:
-    # clss to klasa
-    def __init__(self, host: str = '192.168.0.111', port: int = 8000):
-        # tak.................
+    def __init__(self, host: str = '192.168.0.111', port: int = 8080):
         self.port = port
         self.host = host
 
     def starhost(self) -> HTTPServer:
-        # (-:
         return HTTPServer((self.host, self.port), LocalServer)
-        # zwraca localny serwer
-        # loca
 
     def stophost(self):
-        return self.starhost().shutdown()
-
-# Autor pracy copyright by : Pawel Kuczmik czli paweltheriperr and Pan krzychu czyli ja
+        return self.starhost()\
+            .shutdown()
