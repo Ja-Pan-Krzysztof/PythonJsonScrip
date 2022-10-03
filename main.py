@@ -25,6 +25,8 @@ def get_ip():
             logger.error(f'Bad Ip')
             logger.warning('Ip was default.')
 
+            return None
+
     else:
         logger.critical('Too many arguments.')
         sys.exit()
